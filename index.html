@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Test de asignación para las casas Concordia, Divitiae, Fatum y Virtus.">
   <meta name="theme-color" content="#080506">
   <title>Bans Academy Selection</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080506'/%3E%3Cpath d='M32 8 53 32 32 56 11 32Z' fill='none' stroke='%23e32636' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23e32636'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080506'/%3E%3Cpath d='M32 8 53 32 32 56 11 32Z' fill='none' stroke='%23e32636' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23e32636'/%3E%3C/svg%3E">
   <style>
     :root {
       --black: #080506;
@@ -21,9 +23,13 @@
       --shadow: 0 24px 80px rgba(0, 0, 0, .55);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html { color-scheme: dark; }
+    html {
+      color-scheme: dark;
+    }
 
     body {
       margin: 0;
@@ -44,15 +50,20 @@
       pointer-events: none;
       opacity: .34;
       background-image:
-        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px);
       background-size: 42px 42px;
       mask-image: linear-gradient(to bottom, black, transparent 90%);
     }
 
-    button, input { font: inherit; }
+    button,
+    input {
+      font: inherit;
+    }
 
-    button { -webkit-tap-highlight-color: transparent; }
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
 
     .ambient-symbols {
       position: fixed;
@@ -71,14 +82,40 @@
       filter: blur(.2px);
     }
 
-    .ambient-symbols span:nth-child(1) { top: 8%; left: 4%; transform: rotate(-15deg); }
-    .ambient-symbols span:nth-child(2) { top: 64%; left: 7%; animation-delay: -5s; }
-    .ambient-symbols span:nth-child(3) { top: 12%; right: 4%; animation-delay: -8s; }
-    .ambient-symbols span:nth-child(4) { bottom: 4%; right: 7%; animation-delay: -2s; }
+    .ambient-symbols span:nth-child(1) {
+      top: 8%;
+      left: 4%;
+      transform: rotate(-15deg);
+    }
+
+    .ambient-symbols span:nth-child(2) {
+      top: 64%;
+      left: 7%;
+      animation-delay: -5s;
+    }
+
+    .ambient-symbols span:nth-child(3) {
+      top: 12%;
+      right: 4%;
+      animation-delay: -8s;
+    }
+
+    .ambient-symbols span:nth-child(4) {
+      bottom: 4%;
+      right: 7%;
+      animation-delay: -2s;
+    }
 
     @keyframes drift {
-      from { translate: 0 -8px; rotate: -3deg; }
-      to { translate: 0 14px; rotate: 4deg; }
+      from {
+        translate: 0 -8px;
+        rotate: -3deg;
+      }
+
+      to {
+        translate: 0 14px;
+        rotate: 4deg;
+      }
     }
 
     .app-shell {
@@ -139,7 +176,7 @@
       border: 1px solid var(--line);
       border-radius: 26px;
       background: linear-gradient(145deg, rgba(28, 16, 19, .94), rgba(12, 8, 9, .96));
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.035);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .035);
       backdrop-filter: blur(18px);
     }
 
@@ -148,17 +185,26 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,.025) 48%, transparent 70%);
+      background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, .025) 48%, transparent 70%);
       translate: -100% 0;
       animation: sheen 9s ease-in-out infinite;
     }
 
     @keyframes sheen {
-      0%, 70% { translate: -100% 0; }
-      100% { translate: 100% 0; }
+
+      0%,
+      70% {
+        translate: -100% 0;
+      }
+
+      100% {
+        translate: 100% 0;
+      }
     }
 
-    .quiz-card { padding: clamp(24px, 5vw, 48px); }
+    .quiz-card {
+      padding: clamp(24px, 5vw, 48px);
+    }
 
     .progress-row {
       display: flex;
@@ -172,7 +218,7 @@
       flex: 1;
       overflow: hidden;
       border-radius: 99px;
-      background: rgba(255,255,255,.075);
+      background: rgba(255, 255, 255, .075);
     }
 
     .progress-fill {
@@ -180,8 +226,8 @@
       height: 100%;
       border-radius: inherit;
       background: linear-gradient(90deg, var(--red-dark), var(--red-bright));
-      box-shadow: 0 0 16px rgba(255,76,91,.45);
-      transition: width .45s cubic-bezier(.2,.8,.2,1);
+      box-shadow: 0 0 16px rgba(255, 76, 91, .45);
+      transition: width .45s cubic-bezier(.2, .8, .2, 1);
     }
 
     .progress-label {
@@ -193,11 +239,20 @@
       text-align: right;
     }
 
-    .question-wrap { animation: enter .42s cubic-bezier(.2,.8,.2,1); }
+    .question-wrap {
+      animation: enter .42s cubic-bezier(.2, .8, .2, 1);
+    }
 
     @keyframes enter {
-      from { opacity: 0; translate: 0 12px; }
-      to { opacity: 1; translate: 0 0; }
+      from {
+        opacity: 0;
+        translate: 0 12px;
+      }
+
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
     }
 
     .eyebrow {
@@ -236,17 +291,17 @@
       color: var(--cream);
       text-align: left;
       line-height: 1.42;
-      border: 1px solid rgba(255,255,255,.09);
+      border: 1px solid rgba(255, 255, 255, .09);
       border-radius: 16px;
-      background: rgba(255,255,255,.025);
+      background: rgba(255, 255, 255, .025);
       cursor: pointer;
       transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
     }
 
     .option:hover {
       transform: translateY(-2px);
-      border-color: rgba(255,76,91,.42);
-      background: rgba(227,38,54,.07);
+      border-color: rgba(255, 76, 91, .42);
+      background: rgba(227, 38, 54, .07);
     }
 
     .option:focus-visible {
@@ -256,8 +311,8 @@
 
     .option.selected {
       border-color: var(--red-bright);
-      background: linear-gradient(135deg, rgba(227,38,54,.19), rgba(227,38,54,.055));
-      box-shadow: 0 0 0 1px rgba(255,76,91,.1), 0 12px 34px rgba(111, 5, 18, .18);
+      background: linear-gradient(135deg, rgba(227, 38, 54, .19), rgba(227, 38, 54, .055));
+      box-shadow: 0 0 0 1px rgba(255, 76, 91, .1), 0 12px 34px rgba(111, 5, 18, .18);
     }
 
     .actions {
@@ -284,11 +339,13 @@
     }
 
     .btn-secondary {
-      border-color: rgba(255,255,255,.11);
-      background: rgba(255,255,255,.035);
+      border-color: rgba(255, 255, 255, .11);
+      background: rgba(255, 255, 255, .035);
     }
 
-    .btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,.075); }
+    .btn-secondary:hover:not(:disabled) {
+      background: rgba(255, 255, 255, .075);
+    }
 
     .btn-primary {
       margin-left: auto;
@@ -296,9 +353,15 @@
       box-shadow: 0 12px 28px rgba(181, 11, 31, .25);
     }
 
-    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(181, 11, 31, .35); }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(181, 11, 31, .35);
+    }
 
-    .btn:disabled { opacity: .35; cursor: not-allowed; }
+    .btn:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
 
     .result-card {
       display: none;
@@ -306,11 +369,23 @@
       text-align: center;
     }
 
-    .result-card.visible { display: block; animation: reveal .7s cubic-bezier(.2,.9,.2,1); }
+    .result-card.visible {
+      display: block;
+      animation: reveal .7s cubic-bezier(.2, .9, .2, 1);
+    }
 
     @keyframes reveal {
-      from { opacity: 0; scale: .96; filter: blur(8px); }
-      to { opacity: 1; scale: 1; filter: blur(0); }
+      from {
+        opacity: 0;
+        scale: .96;
+        filter: blur(8px);
+      }
+
+      to {
+        opacity: 1;
+        scale: 1;
+        filter: blur(0);
+      }
     }
 
     .result-seal {
@@ -320,13 +395,13 @@
       width: 112px;
       height: 112px;
       margin: 2px auto 28px;
-      border: 1px solid rgba(255,76,91,.55);
+      border: 1px solid rgba(255, 76, 91, .55);
       border-radius: 50%;
       color: var(--red-bright);
       font-family: Georgia, serif;
       font-size: 3.8rem;
-      background: radial-gradient(circle, rgba(227,38,54,.2), transparent 68%);
-      box-shadow: 0 0 55px rgba(227,38,54,.24), inset 0 0 28px rgba(227,38,54,.12);
+      background: radial-gradient(circle, rgba(227, 38, 54, .2), transparent 68%);
+      box-shadow: 0 0 55px rgba(227, 38, 54, .24), inset 0 0 28px rgba(227, 38, 54, .12);
     }
 
     .result-seal::before,
@@ -334,14 +409,22 @@
       content: "";
       position: absolute;
       inset: -9px;
-      border: 1px solid rgba(255,76,91,.16);
+      border: 1px solid rgba(255, 76, 91, .16);
       border-radius: 50%;
       animation: orbit 12s linear infinite;
     }
 
-    .result-seal::after { inset: -17px; border-style: dashed; animation-direction: reverse; }
+    .result-seal::after {
+      inset: -17px;
+      border-style: dashed;
+      animation-direction: reverse;
+    }
 
-    @keyframes orbit { to { rotate: 360deg; } }
+    @keyframes orbit {
+      to {
+        rotate: 360deg;
+      }
+    }
 
     .result-prefix {
       margin: 0 0 6px;
@@ -359,7 +442,7 @@
       font-size: clamp(2.8rem, 10vw, 5.8rem);
       line-height: 1;
       letter-spacing: -.035em;
-      text-shadow: 0 0 36px rgba(227,38,54,.18);
+      text-shadow: 0 0 36px rgba(227, 38, 54, .18);
     }
 
     .result-meaning {
@@ -382,14 +465,16 @@
       max-width: 100%;
       margin: 0 auto 24px;
       padding: 9px 13px;
-      border: 1px solid rgba(255,76,91,.2);
+      border: 1px solid rgba(255, 76, 91, .2);
       border-radius: 99px;
       color: var(--muted);
-      background: rgba(227,38,54,.06);
+      background: rgba(227, 38, 54, .06);
       font-size: .84rem;
     }
 
-    .tie-note.visible { display: block; }
+    .tie-note.visible {
+      display: block;
+    }
 
     .score-grid {
       display: grid;
@@ -401,13 +486,22 @@
 
     .score-item {
       padding: 12px 7px;
-      border: 1px solid rgba(255,255,255,.07);
+      border: 1px solid rgba(255, 255, 255, .07);
       border-radius: 12px;
-      background: rgba(255,255,255,.025);
+      background: rgba(255, 255, 255, .025);
     }
 
-    .score-item strong { display: block; margin-bottom: 3px; color: var(--red-bright); font-size: 1.15rem; }
-    .score-item span { color: var(--muted); font-size: .75rem; }
+    .score-item strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--red-bright);
+      font-size: 1.15rem;
+    }
+
+    .score-item span {
+      color: var(--muted);
+      font-size: .75rem;
+    }
 
     .footer-note {
       margin: 18px 0 0;
@@ -418,17 +512,41 @@
     }
 
     @media (max-width: 680px) {
-      .app-shell { width: min(100% - 20px, 920px); padding-top: 18px; }
-      .topbar { align-items: flex-start; }
-      .quiz-card { border-radius: 20px; }
-      .progress-row { margin-bottom: 27px; }
-      .options { grid-template-columns: 1fr; }
-      .option { min-height: 68px; }
-      .score-grid { grid-template-columns: repeat(2, 1fr); }
+      .app-shell {
+        width: min(100% - 20px, 920px);
+        padding-top: 18px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .quiz-card {
+        border-radius: 20px;
+      }
+
+      .progress-row {
+        margin-bottom: 27px;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .option {
+        min-height: 68px;
+      }
+
+      .score-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+
+      *,
+      *::before,
+      *::after {
         scroll-behavior: auto !important;
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
@@ -437,6 +555,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="ambient-symbols" aria-hidden="true">
     <span>♥</span><span>♦</span><span>♣</span><span>♠</span>
@@ -523,7 +642,7 @@
         ]
       },
       {
-        text: "El plan de tu equipo falla justo antes de presentarlo.",
+        text: "El plan de tu equipo falla justo antes de presentarlo. ¿Qué haces?",
         options: [
           ["divitiae", "Creo algo nuevo con lo que todavía funciona."],
           ["virtus", "Mantengo el plan original tanto como sea posible."],
@@ -532,7 +651,7 @@
         ]
       },
       {
-        text: "Puedes decidir qué hacer con un salón abandonado.",
+        text: "Puedes decidir qué hacer con un salón abandonado. ¿Qué haces?",
         options: [
           ["concordia", "Lo convierto en un lugar donde cualquiera pueda descansar."],
           ["fatum", "Lo dejo casi igual para que cada persona le dé un uso diferente."],
@@ -541,7 +660,7 @@
         ]
       },
       {
-        text: "Escuchas varias versiones de un mismo problema.",
+        text: "Varias personas te cuentan versiones distintas sobre lo que pasó. ¿Qué haces?",
         options: [
           ["virtus", "Cuento únicamente lo que yo vi."],
           ["concordia", "Hablo por separado con las personas involucradas."],
@@ -550,7 +669,7 @@
         ]
       },
       {
-        text: "Comienza a circular un rumor falso sobre ti.",
+        text: "Comienza a circular un rumor falso sobre ti. ¿Qué haces?",
         options: [
           ["fatum", "Observo hasta dónde llega antes de reaccionar."],
           ["concordia", "Hablo con quienes comenzaron a tratarme diferente."],
@@ -559,7 +678,7 @@
         ]
       },
       {
-        text: "Te eligen como representante de tu clase.",
+        text: "Te eligen como representante de tu clase. ¿Qué haces primero?",
         options: [
           ["divitiae", "Organizo las tareas y problemas por importancia."],
           ["concordia", "Escucho especialmente a quienes casi nunca hablan."],
@@ -568,7 +687,7 @@
         ]
       },
       {
-        text: "Te prestan un objeto mágico desconocido.",
+        text: "Te prestan un objeto mágico desconocido. ¿Qué haces primero?",
         options: [
           ["virtus", "Decido desde el principio para qué no lo utilizaría."],
           ["divitiae", "Pruebo sus funciones y anoto cada resultado."],
@@ -586,7 +705,7 @@
         ]
       },
       {
-        text: "Los pasillos de la escuela cambian constantemente.",
+        text: "Los pasillos de la escuela cambian constantemente. ¿Cómo te orientas?",
         options: [
           ["fatum", "Sigo las señales que se repiten."],
           ["virtus", "Elijo un punto seguro al cual siempre pueda regresar."],
@@ -595,7 +714,7 @@
         ]
       },
       {
-        text: "Te ofrecen una gran oportunidad, pero debes dejar un proyecto grupal.",
+        text: "Te ofrecen una gran oportunidad, pero debes dejar un proyecto grupal. ¿Qué haces?",
         options: [
           ["concordia", "Hablo con el grupo y dejo el proyecto funcionando."],
           ["fatum", "Acepto la oportunidad para descubrir adónde me lleva."],
@@ -728,4 +847,5 @@
     renderQuestion();
   </script>
 </body>
+
 </html>
