@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Test de asignación para las casas Concordia, Divitiae, Fatum y Virtus.">
+  <meta name="theme-color" content="#080506">
+  <title>Bans Academy Selection</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080506'/%3E%3Cpath d='M32 8 53 32 32 56 11 32Z' fill='none' stroke='%23e32636' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23e32636'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --black: #080506;
+      --panel: rgba(20, 12, 14, .88);
+      --panel-strong: #160c0f;
+      --red: #e32636;
+      --red-bright: #ff4c5b;
+      --red-dark: #6b0d18;
+      --cream: #f7efef;
+      --muted: #bbaeb1;
+      --line: rgba(255, 76, 91, .18);
+      --shadow: 0 24px 80px rgba(0, 0, 0, .55);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { color-scheme: dark; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--cream);
+      background:
+        radial-gradient(circle at 12% 20%, rgba(162, 19, 34, .18), transparent 32rem),
+        radial-gradient(circle at 88% 75%, rgba(112, 7, 19, .16), transparent 30rem),
+        linear-gradient(145deg, #050304 0%, #0d0709 48%, #050304 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .34;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    button, input { font: inherit; }
+
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .ambient-symbols {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ambient-symbols span {
+      position: absolute;
+      color: rgba(227, 38, 54, .12);
+      font-family: Georgia, serif;
+      font-size: clamp(3rem, 8vw, 8rem);
+      animation: drift 13s ease-in-out infinite alternate;
+      filter: blur(.2px);
+    }
+
+    .ambient-symbols span:nth-child(1) { top: 8%; left: 4%; transform: rotate(-15deg); }
+    .ambient-symbols span:nth-child(2) { top: 64%; left: 7%; animation-delay: -5s; }
+    .ambient-symbols span:nth-child(3) { top: 12%; right: 4%; animation-delay: -8s; }
+    .ambient-symbols span:nth-child(4) { bottom: 4%; right: 7%; animation-delay: -2s; }
+
+    @keyframes drift {
+      from { translate: 0 -8px; rotate: -3deg; }
+      to { translate: 0 14px; rotate: 4deg; }
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      aspect-ratio: 1;
+      flex: 0 0 auto;
+      border: 1px solid rgba(255, 76, 91, .55);
+      transform: rotate(45deg);
+      background: rgba(227, 38, 54, .08);
+      box-shadow: 0 0 28px rgba(227, 38, 54, .18);
+    }
+
+    .brand-mark span {
+      transform: rotate(-45deg);
+      color: var(--red-bright);
+      font-size: 1.35rem;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.05rem, 3vw, 1.45rem);
+      font-weight: 600;
+      letter-spacing: .03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: linear-gradient(145deg, rgba(28, 16, 19, .94), rgba(12, 8, 9, .96));
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.035);
+      backdrop-filter: blur(18px);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,.025) 48%, transparent 70%);
+      translate: -100% 0;
+      animation: sheen 9s ease-in-out infinite;
+    }
+
+    @keyframes sheen {
+      0%, 70% { translate: -100% 0; }
+      100% { translate: 100% 0; }
+    }
+
+    .quiz-card { padding: clamp(24px, 5vw, 48px); }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 34px;
+    }
+
+    .progress-track {
+      height: 4px;
+      flex: 1;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(255,255,255,.075);
+    }
+
+    .progress-fill {
+      width: 10%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red-dark), var(--red-bright));
+      box-shadow: 0 0 16px rgba(255,76,91,.45);
+      transition: width .45s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .progress-label {
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      min-width: 52px;
+      text-align: right;
+    }
+
+    .question-wrap { animation: enter .42s cubic-bezier(.2,.8,.2,1); }
+
+    @keyframes enter {
+      from { opacity: 0; translate: 0 12px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+
+    .eyebrow {
+      margin: 0 0 11px;
+      color: var(--red-bright);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .question {
+      margin: 0 0 28px;
+      max-width: 720px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.65rem, 5vw, 2.65rem);
+      line-height: 1.13;
+      font-weight: 500;
+      text-wrap: balance;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .option {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 84px;
+      width: 100%;
+      padding: 17px 18px;
+      color: var(--cream);
+      text-align: left;
+      line-height: 1.42;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 16px;
+      background: rgba(255,255,255,.025);
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .option:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,76,91,.42);
+      background: rgba(227,38,54,.07);
+    }
+
+    .option:focus-visible {
+      outline: 2px solid var(--cream);
+      outline-offset: 3px;
+    }
+
+    .option.selected {
+      border-color: var(--red-bright);
+      background: linear-gradient(135deg, rgba(227,38,54,.19), rgba(227,38,54,.055));
+      box-shadow: 0 0 0 1px rgba(255,76,91,.1), 0 12px 34px rgba(111, 5, 18, .18);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      color: var(--cream);
+      font-weight: 750;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--cream);
+      outline-offset: 3px;
+    }
+
+    .btn-secondary {
+      border-color: rgba(255,255,255,.11);
+      background: rgba(255,255,255,.035);
+    }
+
+    .btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,.075); }
+
+    .btn-primary {
+      margin-left: auto;
+      background: linear-gradient(135deg, #c9182a, #f23a4b);
+      box-shadow: 0 12px 28px rgba(181, 11, 31, .25);
+    }
+
+    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(181, 11, 31, .35); }
+
+    .btn:disabled { opacity: .35; cursor: not-allowed; }
+
+    .result-card {
+      display: none;
+      padding: clamp(28px, 6vw, 58px);
+      text-align: center;
+    }
+
+    .result-card.visible { display: block; animation: reveal .7s cubic-bezier(.2,.9,.2,1); }
+
+    @keyframes reveal {
+      from { opacity: 0; scale: .96; filter: blur(8px); }
+      to { opacity: 1; scale: 1; filter: blur(0); }
+    }
+
+    .result-seal {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 112px;
+      height: 112px;
+      margin: 2px auto 28px;
+      border: 1px solid rgba(255,76,91,.55);
+      border-radius: 50%;
+      color: var(--red-bright);
+      font-family: Georgia, serif;
+      font-size: 3.8rem;
+      background: radial-gradient(circle, rgba(227,38,54,.2), transparent 68%);
+      box-shadow: 0 0 55px rgba(227,38,54,.24), inset 0 0 28px rgba(227,38,54,.12);
+    }
+
+    .result-seal::before,
+    .result-seal::after {
+      content: "";
+      position: absolute;
+      inset: -9px;
+      border: 1px solid rgba(255,76,91,.16);
+      border-radius: 50%;
+      animation: orbit 12s linear infinite;
+    }
+
+    .result-seal::after { inset: -17px; border-style: dashed; animation-direction: reverse; }
+
+    @keyframes orbit { to { rotate: 360deg; } }
+
+    .result-prefix {
+      margin: 0 0 6px;
+      color: var(--muted);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    .result-name {
+      margin: 0;
+      color: var(--cream);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 10vw, 5.8rem);
+      line-height: 1;
+      letter-spacing: -.035em;
+      text-shadow: 0 0 36px rgba(227,38,54,.18);
+    }
+
+    .result-meaning {
+      margin: 13px 0 20px;
+      color: var(--red-bright);
+      font-weight: 750;
+    }
+
+    .result-description {
+      max-width: 610px;
+      margin: 0 auto 24px;
+      color: #d5cacc;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .tie-note {
+      display: none;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto 24px;
+      padding: 9px 13px;
+      border: 1px solid rgba(255,76,91,.2);
+      border-radius: 99px;
+      color: var(--muted);
+      background: rgba(227,38,54,.06);
+      font-size: .84rem;
+    }
+
+    .tie-note.visible { display: block; }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-width: 610px;
+      margin: 0 auto 30px;
+    }
+
+    .score-item {
+      padding: 12px 7px;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 12px;
+      background: rgba(255,255,255,.025);
+    }
+
+    .score-item strong { display: block; margin-bottom: 3px; color: var(--red-bright); font-size: 1.15rem; }
+    .score-item span { color: var(--muted); font-size: .75rem; }
+
+    .footer-note {
+      margin: 18px 0 0;
+      color: #71676a;
+      text-align: center;
+      font-size: .76rem;
+      letter-spacing: .08em;
+    }
+
+    @media (max-width: 680px) {
+      .app-shell { width: min(100% - 20px, 920px); padding-top: 18px; }
+      .topbar { align-items: flex-start; }
+      .quiz-card { border-radius: 20px; }
+      .progress-row { margin-bottom: 27px; }
+      .options { grid-template-columns: 1fr; }
+      .option { min-height: 68px; }
+      .score-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-symbols" aria-hidden="true">
+    <span>♥</span><span>♦</span><span>♣</span><span>♠</span>
+  </div>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span>✦</span></div>
+        <h1>Bans Academy Selection</h1>
+      </div>
+    </header>
+
+    <section id="quizCard" class="card quiz-card" aria-live="polite">
+      <div class="progress-row">
+        <div class="progress-track" aria-hidden="true">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <span id="progressLabel" class="progress-label">1 / 10</span>
+      </div>
+
+      <div id="questionWrap" class="question-wrap">
+        <p class="eyebrow">Elección <span id="questionNumber">01</span></p>
+        <h2 id="questionText" class="question"></h2>
+        <div id="options" class="options" role="radiogroup" aria-labelledby="questionText"></div>
+      </div>
+
+      <div class="actions">
+        <button id="backBtn" class="btn btn-secondary" type="button">Atrás</button>
+        <button id="nextBtn" class="btn btn-primary" type="button" disabled>Siguiente</button>
+      </div>
+    </section>
+
+    <section id="resultCard" class="card result-card" aria-live="polite">
+      <div id="resultSeal" class="result-seal" aria-hidden="true"></div>
+      <p class="result-prefix">Tu casa es</p>
+      <h2 id="resultName" class="result-name"></h2>
+      <p id="resultMeaning" class="result-meaning"></p>
+      <p id="resultDescription" class="result-description"></p>
+      <p id="tieNote" class="tie-note"></p>
+      <div id="scoreGrid" class="score-grid"></div>
+      <button id="restartBtn" class="btn btn-primary" type="button">Volver a realizar el test</button>
+    </section>
+
+    <p class="footer-note">♥ CONCORDIA · ♦ DIVITIAE · ♣ FATUM · ♠ VIRTUS</p>
+  </main>
+
+  <script>
+    const houses = {
+      concordia: {
+        name: "Concordia",
+        symbol: "♥",
+        meaning: "Armonía · unión · vínculos",
+        description: "Percibes los hilos que conectan a las personas. Tu fuerza aparece al escuchar, reunir y transformar diferencias en algo que pueda sostenerse en conjunto."
+      },
+      divitiae: {
+        name: "Divitiae",
+        symbol: "♦",
+        meaning: "Abundancia · ingenio · crecimiento",
+        description: "Ves posibilidades donde otros ven límites. Sabes aprovechar lo que existe, transformarlo y construir algo valioso a partir de recursos que parecían insuficientes."
+      },
+      fatum: {
+        name: "Fatum",
+        symbol: "♣",
+        meaning: "Destino · intuición · posibilidades",
+        description: "Te mueves bien entre lo incierto. Observas señales, aceptas los giros inesperados y encuentras caminos que no siempre pueden descubrirse siguiendo un plan."
+      },
+      virtus: {
+        name: "Virtus",
+        symbol: "♠",
+        meaning: "Integridad · firmeza · carácter",
+        description: "Tu centro está en aquello que decides no traicionar. Aunque puedas sentir dudas, conservas tus principios y sabes permanecer firme cuando una decisión realmente importa."
+      }
+    };
+
+    const questions = [
+      {
+        text: "Encuentras un libro con mensajes ocultos. ¿Qué haces?",
+        options: [
+          ["fatum", "Sigo las pistas en el orden que me parezca correcto."],
+          ["divitiae", "Intento descifrar primero el mensaje completo."],
+          ["concordia", "Escribo una respuesta para ver si alguien contesta."],
+          ["virtus", "Se lo entrego al encargado y le cuento lo que encontré."]
+        ]
+      },
+      {
+        text: "El plan de tu equipo falla justo antes de presentarlo.",
+        options: [
+          ["divitiae", "Creo algo nuevo con lo que todavía funciona."],
+          ["virtus", "Mantengo el plan original tanto como sea posible."],
+          ["fatum", "Comienzo y voy improvisando sobre la marcha."],
+          ["concordia", "Reparto las tareas según lo que cada persona pueda resolver."]
+        ]
+      },
+      {
+        text: "Puedes decidir qué hacer con un salón abandonado.",
+        options: [
+          ["concordia", "Lo convierto en un lugar donde cualquiera pueda descansar."],
+          ["fatum", "Lo dejo casi igual para que cada persona le dé un uso diferente."],
+          ["virtus", "Investigo para qué se utilizaba antes de cambiarlo."],
+          ["divitiae", "Lo transformo en un taller con materiales y herramientas."]
+        ]
+      },
+      {
+        text: "Escuchas varias versiones de un mismo problema.",
+        options: [
+          ["virtus", "Cuento únicamente lo que yo vi."],
+          ["concordia", "Hablo por separado con las personas involucradas."],
+          ["divitiae", "Comparo las versiones para encontrar coincidencias."],
+          ["fatum", "Espero y observo qué sucede después."]
+        ]
+      },
+      {
+        text: "Comienza a circular un rumor falso sobre ti.",
+        options: [
+          ["fatum", "Observo hasta dónde llega antes de reaccionar."],
+          ["concordia", "Hablo con quienes comenzaron a tratarme diferente."],
+          ["virtus", "Aclaro públicamente lo que ocurrió."],
+          ["divitiae", "Investigo quién lo inició y por qué le creyeron."]
+        ]
+      },
+      {
+        text: "Te eligen como representante de tu clase.",
+        options: [
+          ["divitiae", "Organizo las tareas y problemas por importancia."],
+          ["concordia", "Escucho especialmente a quienes casi nunca hablan."],
+          ["fatum", "Decido las cosas conforme vayan ocurriendo."],
+          ["virtus", "Cumplo lo que prometí, aunque después resulte difícil."]
+        ]
+      },
+      {
+        text: "Te prestan un objeto mágico desconocido.",
+        options: [
+          ["virtus", "Decido desde el principio para qué no lo utilizaría."],
+          ["divitiae", "Pruebo sus funciones y anoto cada resultado."],
+          ["concordia", "Investigo si cambia cuando hay otras personas cerca."],
+          ["fatum", "Lo llevo conmigo hasta encontrar el momento indicado."]
+        ]
+      },
+      {
+        text: "Pierdes una competencia. ¿Qué te molestaría más?",
+        options: [
+          ["concordia", "Que el equipo termine peleado."],
+          ["divitiae", "Que una buena idea haya sido desperdiciada."],
+          ["fatum", "Que nadie quisiera cambiar un plan que no funcionaba."],
+          ["virtus", "Haber aceptado algo con lo que nunca estuve de acuerdo."]
+        ]
+      },
+      {
+        text: "Los pasillos de la escuela cambian constantemente.",
+        options: [
+          ["fatum", "Sigo las señales que se repiten."],
+          ["virtus", "Elijo un punto seguro al cual siempre pueda regresar."],
+          ["divitiae", "Registro los cambios para encontrar un patrón."],
+          ["concordia", "Dejo marcas para orientar a otras personas perdidas."]
+        ]
+      },
+      {
+        text: "Te ofrecen una gran oportunidad, pero debes dejar un proyecto grupal.",
+        options: [
+          ["concordia", "Hablo con el grupo y dejo el proyecto funcionando."],
+          ["fatum", "Acepto la oportunidad para descubrir adónde me lleva."],
+          ["divitiae", "Busco aprovecharla para mejorar también el proyecto."],
+          ["virtus", "Me quedo si ya había prometido terminar el proyecto."]
+        ]
+      }
+    ];
+
+    const answers = Array(questions.length).fill(null);
+    let current = 0;
+
+    const quizCard = document.getElementById("quizCard");
+    const resultCard = document.getElementById("resultCard");
+    const questionWrap = document.getElementById("questionWrap");
+    const questionText = document.getElementById("questionText");
+    const questionNumber = document.getElementById("questionNumber");
+    const optionsBox = document.getElementById("options");
+    const progressFill = document.getElementById("progressFill");
+    const progressLabel = document.getElementById("progressLabel");
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function renderQuestion() {
+      const question = questions[current];
+      questionWrap.style.animation = "none";
+      void questionWrap.offsetWidth;
+      questionWrap.style.animation = "";
+
+      questionText.textContent = question.text;
+      questionNumber.textContent = String(current + 1).padStart(2, "0");
+      progressLabel.textContent = `${current + 1} / ${questions.length}`;
+      progressFill.style.width = `${((current + 1) / questions.length) * 100}%`;
+      optionsBox.innerHTML = "";
+
+      question.options.forEach(([house, text], index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `option${answers[current] === house ? " selected" : ""}`;
+        button.setAttribute("role", "radio");
+        button.setAttribute("aria-checked", answers[current] === house ? "true" : "false");
+        button.textContent = text;
+        button.addEventListener("click", () => selectOption(house, index));
+        optionsBox.appendChild(button);
+      });
+
+      backBtn.disabled = current === 0;
+      nextBtn.disabled = answers[current] === null;
+      nextBtn.textContent = current === questions.length - 1 ? "Descubrir mi casa" : "Siguiente";
+    }
+
+    function selectOption(house) {
+      answers[current] = house;
+      [...optionsBox.children].forEach((option, index) => {
+        const selected = questions[current].options[index][0] === house;
+        option.classList.toggle("selected", selected);
+        option.setAttribute("aria-checked", selected ? "true" : "false");
+      });
+      nextBtn.disabled = false;
+    }
+
+    function secureRandomIndex(length) {
+      if (window.crypto?.getRandomValues) {
+        const values = new Uint32Array(1);
+        window.crypto.getRandomValues(values);
+        return values[0] % length;
+      }
+      return Math.floor(Math.random() * length);
+    }
+
+    function showResult() {
+      const scores = Object.fromEntries(Object.keys(houses).map(house => [house, 0]));
+      answers.forEach(house => scores[house]++);
+      const highest = Math.max(...Object.values(scores));
+      const tied = Object.keys(scores).filter(house => scores[house] === highest);
+      const winnerKey = tied[secureRandomIndex(tied.length)];
+      const winner = houses[winnerKey];
+
+      document.getElementById("resultSeal").textContent = winner.symbol;
+      document.getElementById("resultName").textContent = winner.name;
+      document.getElementById("resultMeaning").textContent = winner.meaning;
+      document.getElementById("resultDescription").textContent = winner.description;
+
+      const tieNote = document.getElementById("tieNote");
+      if (tied.length > 1) {
+        tieNote.textContent = `Hubo un empate entre ${tied.map(key => houses[key].name).join(" y ")}. El oráculo eligió al azar.`;
+        tieNote.classList.add("visible");
+      } else {
+        tieNote.classList.remove("visible");
+      }
+
+      document.getElementById("scoreGrid").innerHTML = Object.entries(houses).map(([key, house]) => `
+        <div class="score-item">
+          <strong>${house.symbol} ${scores[key]}</strong>
+          <span>${house.name}</span>
+        </div>
+      `).join("");
+
+      quizCard.style.display = "none";
+      resultCard.classList.add("visible");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (answers[current] === null) return;
+      if (current < questions.length - 1) {
+        current++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    backBtn.addEventListener("click", () => {
+      if (current > 0) {
+        current--;
+        renderQuestion();
+      }
+    });
+
+    document.getElementById("restartBtn").addEventListener("click", () => {
+      answers.fill(null);
+      current = 0;
+      resultCard.classList.remove("visible");
+      quizCard.style.display = "block";
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>
